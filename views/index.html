@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="5" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .header {
+        height: 15vh;
+        padding: 20px;
+        background-color: #c1c1e2;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .data {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .item {
+        width: 350px;
+        height: 450px;
+        text-align: center;
+        margin: 0 20px;
+      }
+
+      .item .wrapper {
+        height: 70%;
+        color: #ffffff;
+      }
+
+      .item .wrapper h1:first-child {
+        padding-top: 15px;
+      }
+
+      .item .t {
+        background-color: #a6a636;
+      }
+
+      .item .h {
+        background-color: #a6a636;
+      }
+
+      .item .wrapper #temp,
+      .item .wrapper #humi {
+        margin-top: 40px;
+      }
+    </style>
+
+    <title>Air Quality Monitring</title>
+  </head>
+  <body>
+
+    <div class="header">
+      <div class="left">
+        <h1>Mobile Computing Course</h1>
+        <h2>Air Quality Monitring Project</h2>
+      </div>
+
+      <div class="right">
+        <h1>Under Supervisor: Dr. Nehal Khaled</h1>
+        <h2><pre>                                 Eng. Hadeal Ismail</pre></h2>
+      </div>
+    </div>
+
+    <div class="data">
+
+      <div class="item">
+        <div class="wrapper t">
+          <h1>Temperature</h1>
+          <h2 id="temperature"></h2>
+        </div>
+        <span id="temperatureMess"></span>
+      </div>
+
+      <div class="item">
+        <div class="wrapper h">
+          <h1>Humidity</h1>
+          <h2 id="humidity"></h2>
+        </div>
+        <span id="humidityMess"></span>
+      </div>
+
+      <div class="item">
+        <div class="wrapper h">
+          <h1>Purity</h1>
+          <h2 id="purityMess"><%= purityMess %></h2>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      const socket = window.io();
+
+      let temperature = document.getElementById("temperature");
+      let temperatureMess = document.getElementById("temperatureMess");
+
+      let humidity = document.getElementById("humidity");
+      let humidityMess = document.getElementById("humidityMess");
+
+      let purityMess = document.getElementById("purityMess");
+
+      socket.on(
+        "temperature",
+        (data) => (temperature.innerHTML = data.temperature)
+      );
+
+      socket.on(
+        "temperatureMess",
+        (data) => (temperatureMess.innerHTML = data.temperatureMess)
+      );
+
+      socket.on("humidity", (data) => (humidity.innerHTML = data.humidity));
+
+      socket.on(
+        "humidityMess",
+        (data) => (humidityMess.innerHTML = data.humidityMess)
+      );
+
+      socket.on(
+        "purityMess",
+        (data) => (purityMess.innerHTML = data.purityMess)
+      );
+    </script>
+  </body>
+</html>
